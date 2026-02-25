@@ -40,7 +40,6 @@ def shop_trip() -> None:
         best_shop = None
         home_location = customer.location[:]
         for shop in shops_objects:
-            # print(customer.distance_to_shop(shop.location))
             price = customer.trip_cost(shop, fuel_price)
             print(f"{customer.name}'s trip to the {shop.name}"
                   f" costs {price}")
@@ -64,7 +63,7 @@ def shop_trip() -> None:
             print("")
             print(f"{customer.name} rides home")
             actual_money = customer.money - best_price
-            print(f"{customer.name} now has {actual_money} dollars")
+            print(f"{customer.name} now has {actual_money:.2f} dollars")
             print("")
             customer.location = home_location[:]
 

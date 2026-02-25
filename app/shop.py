@@ -19,7 +19,7 @@ class Shop:
             cost = quantity * self.products[product]
             if cost.is_integer():
                 cost = int(cost)
-            print(f"{quantity} {product}s for {cost} dollars")
+            print(f"{quantity} {product}s for {cost:.2f} dollars")
         total_cost = self.products_cost(customer_products)
-        print(f"Total cost is {total_cost} dollars")
+        print(f"Total cost is {total_cost:.2f} dollars")
         return total_cost

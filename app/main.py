@@ -8,8 +8,10 @@ import datetime
 
 
 def shop_trip() -> None:
-    json_file = open("app/config.json")
-    all_data = json.load(json_file)
+    with open("app/config.json") as json_file:
+        all_data = json.load(json_file)
+    # json_file = open("app/config.json")
+    # all_data = json.load(json_file)
 
     customers = all_data.get("customers")
     shops = all_data.get("shops")
@@ -36,6 +38,7 @@ def shop_trip() -> None:
         command = ""
         best_price = 1000000.00
         best_shop = None
+        home_location = customer.location[:]
         for shop in shops_objects:
             # print(customer.distance_to_shop(shop.location))
             price = customer.trip_cost(shop, fuel_price)
@@ -49,7 +52,8 @@ def shop_trip() -> None:
             command = (f"{customer.name} doesn't have "
                        f"enough money to make a purchase in any shop")
         print(command)
-        if customer.money > best_price:
+        if customer.money >= best_price:
+            customer.location = best_shop.location
             print("")
             print(f"Date: "
                   f"{datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
@@ -59,9 +63,10 @@ def shop_trip() -> None:
             print("See you again!")
             print("")
             print(f"{customer.name} rides home")
-            actual_money = round(customer.money - best_price, 2)
+            actual_money = customer.money - best_price
             print(f"{customer.name} now has {actual_money} dollars")
             print("")
+            customer.location = home_location[:]
 
 
 if __name__ == "__main__":
